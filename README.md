@@ -62,3 +62,18 @@ Aceite futuro: manifesto da fonte e licença, testes de availability_time, split
 - **Portfólio Completo:** [https://beatrizorlandi.github.io](https://beatrizorlandi.github.io)
 - **Estudo de Caso no Site:** [https://beatrizorlandi.github.io/projetos/pipeline-ml-demanda.html](https://beatrizorlandi.github.io/projetos/pipeline-ml-demanda.html)
 - **Planejamento Técnico no Site:** [https://beatrizorlandi.github.io/documentacao/pipeline-ml-demanda.html](https://beatrizorlandi.github.io/documentacao/pipeline-ml-demanda.html)
+
+## Execução Validada no Databricks (05/11/2026)
+
+- **Notebook executado:** `01_pipeline_ml_demanda_horaria.py`
+- **Tabelas geradas:**
+  - Bronze: `workspace.estudos_bronze.bikes_raw` (4.320 horas)
+  - Silver: `workspace.estudos_silver.bikes_horario`
+  - Gold Features: `workspace.estudos_gold.bikes_features` (4.152 janelas com histórico completo de 168h e 14 features causais respeitando atraso de disponibilidade de 1h)
+  - Gold Predições: `workspace.estudos_gold.bikes_predicoes` (831 horas de teste)
+  - Monitoramento: `workspace.estudos_ops.bikes_monitoramento`
+- **Modelo registrado no Unity Catalog:** `workspace.estudos_ai.demanda_bikes` (versão 1)
+- **Métricas comparativas (MLflow):**
+  - Baseline Média Global: `val_mae = 49,203` | `test_mae = 48,807`
+  - Baseline Sazonal (Hora × Fim de Semana): `val_mae = 14,318` | `test_mae = 11,607`
+  - `HistGradientBoostingRegressor` Causal: `val_mae = 13,452` (-6,05% vs. sazonal) | **`test_mae = 10,579`** (`test_rmse = 13,426`).
